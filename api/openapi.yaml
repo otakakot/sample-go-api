@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Sample Go Container API
+  description: |-
+    This is a sample API for a Go application running in a container.
+    It includes endpoints for user authentication and health checks.
+  termsOfService: https://localhost:8080
+  contact:
+    email: kotaro.otaka@example.com
+  license:
+    name: MIT
+  version: 0.0.1
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Health
+    description: Health
+paths:
+  /:
+    get:
+      tags:
+        - Health
+      summary: Health Check
+      description: Health Check
+      operationId: health
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '405':
+          description: Method Not Allowed
+        default:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    HealthRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Optional message for health check
+          example: Health check
+      required:
+        - message
+    HealthResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+          example: OK
+      required:
+        - message
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
